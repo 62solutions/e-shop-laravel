@@ -15,31 +15,37 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                @foreach($order->products as $product)
+                  <tr>
                     <td>
-                        <a href="http://internet-shop.tmweb.ru/mobiles/iphone_x_64">
+                        <a href="{{ route('product', [$product->category->code, $product->code]) }}">
                             <img height="56px" src="http://internet-shop.tmweb.ru/storage/products/iphone_x.jpg">
-                            iPhone X 64GB
+                            {{ $product->name }}
                         </a>
                     </td>
-                    <td><span class="badge">2</span>
+                    <td><span class="badge">{{ $product->pivot->count }}</span>
                         <div class="btn-group form-inline">
-                            <form action="http://internet-shop.tmweb.ru/basket/remove/1" method="POST">
+                            <form action=" {{ route('basket-remove', $product) }} " method="POST">
                                 <button type="submit" class="btn btn-danger" href=""><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
                                 <input type="hidden" name="_token" value="98ExPfISiZLN1fiWeIVwPop1tVLDTvEAYtZmH1I1">
+                                @csrf
                             </form>
-                            <form action="http://internet-shop.tmweb.ru/basket/add/1" method="POST">
+                            <form action="{{ route('basket-add', $product) }}" method="POST">
                                 <button type="submit" class="btn btn-success" href=""><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
                                 <input type="hidden" name="_token" value="98ExPfISiZLN1fiWeIVwPop1tVLDTvEAYtZmH1I1">
+                                @csrf
                             </form>
+
                         </div>
                     </td>
-                    <td>71990 ₽</td>
-                    <td>143980 ₽</td>
-                </tr>
+                    <td>{{ $product->price }} ₽</td>
+                    <td>{{ $product->getPriceForCount($product->pivot->count) }} ₽</td>
+                </tr>  
+                @endforeach
+                
                 <tr>
                     <td colspan="3">Общая стоимость:</td>
-                    <td>143980 ₽</td>
+                    <td>{{ $order->getFullPrice() }} ₽</td>
                 </tr>
             </tbody>
         </table>
