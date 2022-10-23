@@ -1,10 +1,10 @@
-@extends('master')
+@extends('layouts.master')
 
 @section('title', 'Главная')
 
 @section('content')
 
-<div class="starter-template">
+
     <h1>Все товары</h1>
     <form method="GET" action="http://internet-shop.tmweb.ru">
         <div class="filters row">
@@ -52,7 +52,7 @@
         </ul>
     </nav>
 
-</div>
+
 
 
 @endsection
