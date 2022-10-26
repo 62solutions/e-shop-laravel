@@ -26,8 +26,18 @@
                 <li ><a href="{{ route('categories') }}">Категории</a></li>
                 <li ><a href="{{ route('basket') }}">В корзину</a></li>
                 <li><a href="{{ route('index') }}">Сбросить проект в начальное состояние</a></li>
-                <li><a href="/locale/en">en</a></li>
 
+                <ul class="nav navbar-nav navbar-right">
+                @guest
+                     <li><a href="{{ route('login') }}">Панель администратора</a></li>
+                @endguest    
+                @auth
+                    <li><a href="{{ route('home') }}">Панель администратора</a></li>
+                    <li><a href="{{ route('get-logout') }}">Выйти</a></li>
+                @endauth
+                </ul>
+
+                <!-- <li><a href="/locale/en">en</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">₽<span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -35,12 +45,10 @@
                         <li><a href="http://internet-shop.tmweb.ru/currency/USD">$</a></li>
                         <li><a href="http://internet-shop.tmweb.ru/currency/EUR">€</a></li>
                     </ul>
-                </li>
+                </li> -->
             </ul>
 
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="http://internet-shop.tmweb.ru/login">Войти</a></li>    
-             </ul>
+           
         </div>
 
     </div>

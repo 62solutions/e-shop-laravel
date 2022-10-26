@@ -1,8 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
+Auth::routes();
+Route::get('/logout', 'Auth\LoginController@logout')->name('get-logout');
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/index', 'MainController@index')->name('index');
 Route::get('/basket', 'BasketController@basket')->name('basket');
@@ -14,6 +19,10 @@ Route::post('/basket/place', 'BasketController@basketConfirm')->name('basket-con
 Route::get('/categories', 'MainController@categories')->name('categories');
 Route::get('/{category}', 'MainController@category')->name('category');
 Route::get('/{category}/{product?}', 'MainController@product')->name('product');
+
+
+
+
 
 
 
