@@ -2,32 +2,28 @@
 
 namespace App\Http\Middleware;
 
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
-class RedirectIfAuthenticated
+class CheckIsAdmin
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @param  string|null  ...$guards
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, ...$guards)
+    public function handle(Request $request, Closure $next)
     {
-        $guards = empty($guards) ? [null] : $guards;
-
-        foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
-               //return redirect()->route('home');
-            }
-        }
-
+        $user = Auth::user();
+        if(!$user->isAdmin()){
+            session()->flash('warning', 'нет прав администратора');
+            return redirect()->route('index');
+        };
         return $next($request);
+
     }
 }

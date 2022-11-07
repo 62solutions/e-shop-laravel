@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use App\Models\Order;
+class BasketIsNotEmpty
+{
+ 
+    public function handle(Request $request, Closure $next)
+    {
+        $orderId = session('orderId'); 
+
+        if (!is_null($orderId)) {
+            $order = Order::findOrFail($orderId);
+            if($order->products->count() > 0){
+               return $next($request); 
+            }
+        }
+        session()->flash('warning', 'ваша корзина пуста');
+        
+        return redirect()->route('index');
+    }
+}

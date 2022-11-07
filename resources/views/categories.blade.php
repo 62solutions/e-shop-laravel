@@ -6,7 +6,7 @@
         <div class="panel">
             <!-- <a href="/{{$category->code}}"> -->
             <a href="{{ route('category', $category->code)}}">
-                <img src="http://internet-shop.tmweb.ru/storage/categories/mobile.jpg">
+                <img src="{{ Storage::url($category->image) }}" height="240px">
                 <h2>{{$category->name}}</h2>
             </a>
             <p>
